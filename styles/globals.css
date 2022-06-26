@@ -1,16 +1,91 @@
-html,
 body {
-  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+nav {
+  background: #343a40;
+  display: flex;
+  height: 10vh;
+  justify-content: space-between;
+  padding-inline: 5%;
 }
 
-* {
+h1 {
+  color: #F9F9F9;
+}
+ 
+p {
+  color: #5E8F96;
+}
+ 
+ 
+.container {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  width: 80%;
+  height: 80vh;
+  border: solid 2px #006100;
+  border-radius: 2%;
+  overflow: auto;
+}
+
+.content--title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: #F5F5F5;
+  border-bottom: 2px solid #006100;
+  padding: 2% 5%;
+}
+.content--elements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo {
+  width: 90%;
+  background: #F5F5F5;
+  border: solid 1px #d5d5d5;
+  margin-top: 0.5rem;
+  padding: 1% 0.5rem;
   box-sizing: border-box;
 }
+
+.form--element {
+  padding: 1.5%;
+  margin-top: 1.5rem;
+  border-radius: 10%;
+}
+.form--submit {
+  margin-left: 1rem;
+  background: #007BFF;
+  color: white;
+  border: none;
+}
+@media (max-width: 370px) {
+  .form--submit {
+    width: 100%;
+    margin: 0;
+    margin-top: 0.5rem;
+  }
+  .form--input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+.form--input {
+  border: solid #EFF1F3 1px;
+}
+.form--input:focus {
+  border: solid #EFF1F3 1px;
+}
+
+.form {
+  width: 90%;
+}
+ 
