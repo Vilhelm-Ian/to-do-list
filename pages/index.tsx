@@ -22,7 +22,9 @@ const Home: NextPage = () => {
   }
 
   function addTodo(e) {
+    if(e.target?.value.length>30) return
     setToDo(e.target.value)
+   
   }
 
   return (

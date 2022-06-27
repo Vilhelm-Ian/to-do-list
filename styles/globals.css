@@ -49,6 +49,7 @@ p {
 
 .todo {
   width: 90%;
+  word-wrap: break-word;
   background: #F5F5F5;
   border: solid 1px #d5d5d5;
   margin-top: 0.5rem;
