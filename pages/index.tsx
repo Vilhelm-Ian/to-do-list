@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {useState} from "react"
-import ToDo from "../components/ToDo.js"
+import ToDo from "../components/ToDo"
 
 const Home: NextPage = () => {
   let [to_dos, setToDos] = useState<JSX.Element[]>([])
