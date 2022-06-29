@@ -2,31 +2,47 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import ToDo from "../components/ToDo"
 
-const Home: NextPage = () => {
-  let [to_dos, setToDos] = useState<JSX.Element[]>([])
-  let [to_do, setToDo] = useState(""
-                                 )
+const Home: NextPage = ({data, token}) => {
+  let [to_dos, setToDos] = useState([])
+  let [to_do, setToDo] = useState("")
+  
+  useEffect(()=>{
+  if(document.cookie!=="") {
+    if(to_dos.length===0)setToDos(data.to_dos)
+    token = token.split("=")[1]
+    let response = JSON.stringify({token: token, to_dos: to_dos})
+     
+    fetch("http://localhost:3000/api/update",{
+      method: "POST",
+      body: response,
+      headers: {
+        'Content-Type': "application/json",
+      },
+
+    }).then(res=>res.json())
+  }
+  },[to_dos])
+
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault()
     setToDos(oldToDos=>[
     ...oldToDos,
-    <ToDo key={oldToDos.length}  remove={()=>removeTodo(to_do)} value={to_do} />
+    to_do,
     ])
   }
 
   function removeTodo(value: string) {
-    setToDos(todos=>todos.filter(todo=>todo.props.value!==value))
+    setToDos(todos=>todos.filter(todo=>todo!==value))
   }
 
   function addTodo(e) {
     if(e.target?.value.length>30) return
     setToDo(e.target.value)
-   
   }
-
+  let to_do_jsx = to_dos.map((value: string, key: number)=> <ToDo key={key}  remove={()=>removeTodo(value)} value={value} />)
   return (
     <div>
       <div className="container">
@@ -39,7 +55,7 @@ const Home: NextPage = () => {
               <input  type="text" name="todo" onChange={addTodo} value={to_do} className="form--element form--input"/>
               <button type="submit" name="submit" className="form--element form--submit" onClick={addElement}>SUBMIT</button>
             </form>
-              {to_dos}
+              {to_do_jsx}
           </div>
         </div>
       </div>
@@ -48,3 +64,21 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getServerSideProps(context){
+  let cookie = context.req.headers.cookie
+  if(cookie.split("=").length !== 0){
+    let token = cookie.split("=")[1]
+    let res = await fetch("http://localhost:3000/api/validate_token",{
+      method: "POST",
+      body: token,
+    })
+    let data = await res.json()
+    data = JSON.parse(data.name)
+    return { props: {data, token: cookie}}
+  }
+  return {
+    props: {}
+  }
+}
+

@@ -6,10 +6,9 @@ import dbConnect from "../../utils/dbConnect"
 import UserModel, {User} from "../../models/userModel"
 import jwt from "jsonwebtoken"
 
-export interface Payload {
+interface Response {
   username: string,
-  to_dos: string[],
-  _id: string
+  to_dos: string[]
 }
 
 type Data = {
@@ -19,13 +18,13 @@ type Data = {
 async function run(form_data: User)  {
 await dbConnect()
 let user = await  UserModel.find({"username":form_data.username},"password to_dos username")
-console.log(user)
 let match = await bcrypt.compare(form_data.password, user[0].password)
 if(match) return user[0] 
 else throw "failed login" 
 }
 
-async function jwt_sign(payload: Payload) {
+async function jwt_sign(data: Response) {
+  let payload = {}
   let secretKey = String(process.env.JWT_KEY)
   return await jwt.sign(payload, secretKey)
 }
@@ -34,18 +33,12 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  return run(req.body)
-  .catch(err=>res.status(401).json({name: err}))
-  .then((result: Payload)=>{
-      console.log(result)
-      let response: Payload  = {
-        _id: result._id,
-        username: result.username,
-        to_dos: result.to_dos
-      }
+  return run(req.body).catch(err=>console.log(err))
+  .then((result: User)=>{
+      let response: Response  = {username: result.username, to_dos: result.to_dos} 
       jwt_sign(response)
-      .then(token=> {
-        return res.status(200).json({"name": token})
-      })
+      .then(token=> res.status(200).json({name: token}))
+      //let data = JSON.stringify(response)
+      //return res.status(200).json({content: data})
   })
 }

@@ -1,9 +1,11 @@
 import {useState} from "react"
 import styles from '../styles/Login.module.css'
+import {useEffect} from "react"
 
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
    
   function update_input(text: string,callback:Function) {
   if(text.length>30) return
@@ -14,12 +16,12 @@ export default function Login() {
   e.preventDefault()
   try{
     let res = await fetch("http://localhost:3000/api/register",{
-  method: "POST",
-  body: JSON.stringify({username, password}),
-  headers: {
-    'Content-Type': "application/json",
-  },
-  })
+      method: "POST",
+      body: JSON.stringify({username, password}),
+      headers: {
+        'Content-Type': "application/json",
+      },
+    })
   }
   catch(err) {
     console.log(err)
@@ -29,14 +31,18 @@ export default function Login() {
   async function login(e) {
   e.preventDefault()
   try{
-    let res = await fetch("http://localhost:3000/api/login",{
+  let res = await fetch("http://localhost:3000/api/login",{
   method: "POST",
   body: JSON.stringify({username, password}),
   headers: {
     'Content-Type': "application/json",
   },
   })
-  console.log(res,"hi")
+  if(res.status === 200) {
+    let token = await res.json()
+    document.cookie = `token=${token.name}`
+  }
+  if(res.status === 401) alert("invalid login")
   }
   catch(err) {
     console.log(err)
@@ -58,3 +64,17 @@ export default function Login() {
 	)
 	 
 }
+
+//export async function getServerSideProps(context){
+//  let cookie = context.req.headers.cookie
+//  if(cookie.split("=").length !== 0){
+//    let token = cookie.split("=")[1]
+//    let res = await fetch("http://localhost:3000/api/validate_token",{
+//      method: "POST",
+//      body: token,
+//    }) 
+//  }
+//  return {
+//    props: {}
+//  }
+//}
