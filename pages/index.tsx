@@ -6,13 +6,13 @@ import styles from '../styles/Home.module.css'
 import {useState, useEffect} from "react"
 import ToDo from "../components/ToDo"
 
-const Home: NextPage = ({data, token}) => {
+const Home: NextPage = ({recived_todos, token}) => {
   let [to_dos, setToDos] = useState([])
   let [to_do, setToDo] = useState("")
-  
+   
   useEffect(()=>{
   if(token!==undefined) {
-    if(to_dos.length===0)setToDos(data.to_dos)
+    if(to_dos.length===0) setToDos(recived_todos)
     let response = JSON.stringify({token,to_dos})
     fetch(`https://${process.env.URL}/api/update`,{
       method: "POST",
@@ -26,7 +26,7 @@ const Home: NextPage = ({data, token}) => {
     .then(err=>console.log(err))
 
   }
-  },[to_dos,token,data.to_dos])
+  },[to_dos,token,recived_todos])
 
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault()
@@ -69,7 +69,7 @@ export default Home
 
 export async function getServerSideProps(context: any){
   let cookie: string = context.req.headers.cookie
-  if(cookie.split("=").length !== 0){
+  if(cookie!==undefined){
     let token = cookie.split("=")[1]
     let res = await fetch(`https://${process.env.URL}/api/validate_token`,{
       method: "POST",
@@ -79,9 +79,9 @@ export async function getServerSideProps(context: any){
     let data = await res.json()
     data = JSON.parse(data.name)
     let obj: {
-      data: any,
-      cookie: string
-    } = {data, token} 
+      recived_todos: string[],
+      token: string
+    } = {recived_todos: data.to_dos, token} 
     return { props: obj }
   }
   return {
