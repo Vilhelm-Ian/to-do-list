@@ -14,7 +14,7 @@ const Home: NextPage = ({data, token}) => {
   if(token!==undefined) {
     if(to_dos.length===0)setToDos(data.to_dos)
     let response = JSON.stringify({token,to_dos})
-    fetch(`http://${process.env.URL}/api/update`,{
+    fetch(`https://${process.env.URL}/api/update`,{
       method: "POST",
       body: response,
       headers: {
@@ -71,7 +71,7 @@ export async function getServerSideProps(context: any){
   let cookie: string = context.req.headers.cookie
   if(cookie.split("=").length !== 0){
     let token = cookie.split("=")[1]
-    let res = await fetch(`http://${process.env.URL}/api/validate_token`,{
+    let res = await fetch(`https://${process.env.URL}/api/validate_token`,{
       method: "POST",
       body: token,
     })
