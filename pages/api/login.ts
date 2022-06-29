@@ -36,7 +36,7 @@ export default function handler(
   return run(req.body)
   .catch(err=>res.status(401).json({name: err}))
   .then((result: Payload)=>{
-      if(result!==undefined) return res.status(401).json("name": "error")
+      if(result!==undefined) return res.status(401).json({"name": "error"})
       let response: Payload  = {
         _id: result._id,
         username: result.username,
