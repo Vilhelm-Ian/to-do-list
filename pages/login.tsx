@@ -15,7 +15,7 @@ export default function Login() {
   async function register(e: any) {
   e.preventDefault()
   try{
-    let res = await fetch(`https://${process.env.URL}/api/register`,{
+    let res = await fetch(`${process.env.URL}/api/register`,{
       method: "POST",
       body: JSON.stringify({username, password}),
       headers: {
@@ -31,7 +31,7 @@ export default function Login() {
 async function login(e: any) {
   e.preventDefault()
   try{
-    let res = await fetch(`https://${process.env.URL}/api/login`,{
+    let res = await fetch(`${process.env.URL}/api/login`,{
   method: "POST",
   body: JSON.stringify({username, password}),
   headers: {
