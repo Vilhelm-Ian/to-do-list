@@ -11,7 +11,7 @@ const Home: NextPage = ({data, cookie}) => {
   let [to_do, setToDo] = useState("")
   
   useEffect(()=>{
-  if(document.cookie!=="") {
+  if(cookie!==undefined) {
     if(to_dos.length===0)setToDos(data.to_dos)
     let token = cookie.split("=")[1]
     let response = JSON.stringify({token: token, to_dos: to_dos})
