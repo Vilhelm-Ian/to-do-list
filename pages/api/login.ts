@@ -19,7 +19,6 @@ type Data = {
 async function run(form_data: User)  {
 await dbConnect()
 let user = await  UserModel.find({"username":form_data.username},"password to_dos username")
-console.log(user)
 let match = await bcrypt.compare(form_data.password, user[0].password)
 if(match) return user[0] 
 else throw "failed login" 
@@ -37,7 +36,6 @@ export default function handler(
   return run(req.body)
   .catch(err=>res.status(401).json({name: err}))
   .then((result: Payload)=>{
-      console.log(result)
       let response: Payload  = {
         _id: result._id,
         username: result.username,
