@@ -12,7 +12,7 @@ export default function Login() {
   callback(text)
   }
 
-  async function register(e) {
+  async function register(e: any) {
   e.preventDefault()
   try{
     let res = await fetch("http://localhost:3000/api/register",{
@@ -28,7 +28,7 @@ export default function Login() {
   }
 }
    
-  async function login(e) {
+async function login(e: any) {
   e.preventDefault()
   try{
   let res = await fetch("http://localhost:3000/api/login",{

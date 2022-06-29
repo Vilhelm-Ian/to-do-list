@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -5,14 +6,14 @@ import styles from '../styles/Home.module.css'
 import {useState, useEffect} from "react"
 import ToDo from "../components/ToDo"
 
-const Home: NextPage = ({data, token}) => {
+const Home: NextPage = ({data, cookie}) => {
   let [to_dos, setToDos] = useState([])
   let [to_do, setToDo] = useState("")
   
   useEffect(()=>{
   if(document.cookie!=="") {
     if(to_dos.length===0)setToDos(data.to_dos)
-    token = token.split("=")[1]
+    let token = cookie.split("=")[1]
     let response = JSON.stringify({token: token, to_dos: to_dos})
      
     fetch("http://localhost:3000/api/update",{
@@ -24,7 +25,7 @@ const Home: NextPage = ({data, token}) => {
 
     }).then(res=>res.json())
   }
-  },[to_dos])
+  },[to_dos,cookie,data.to_dos])
 
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault()
@@ -65,8 +66,8 @@ const Home: NextPage = ({data, token}) => {
 
 export default Home
 
-export async function getServerSideProps(context){
-  let cookie = context.req.headers.cookie
+export async function getServerSideProps(context: any){
+  let cookie: string = context.req.headers.cookie
   if(cookie.split("=").length !== 0){
     let token = cookie.split("=")[1]
     let res = await fetch("http://localhost:3000/api/validate_token",{
@@ -75,7 +76,11 @@ export async function getServerSideProps(context){
     })
     let data = await res.json()
     data = JSON.parse(data.name)
-    return { props: {data, token: cookie}}
+    let obj: {
+      data: any,
+      cookie: string
+    } = {data, token} 
+    return { props: obj}
   }
   return {
     props: {}

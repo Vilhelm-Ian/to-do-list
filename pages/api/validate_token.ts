@@ -7,7 +7,7 @@ import {Payload} from "./login"
 
 async function run(token: string)  {
 let secret = String(process.env.JWT_KEY)
-let result = await jwt.verify(token,secret)
+let result: any = await jwt.verify(token,secret)
 await dbConnect()
 let user  = await  UserModel.findById(result._id)
 let data = await UserModel.findById(user._id)
@@ -20,7 +20,7 @@ username: data.username
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<any>
 ) {
   return run(req.body)
   .catch(err=>console.log(err))
