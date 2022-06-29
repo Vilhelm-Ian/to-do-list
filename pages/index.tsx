@@ -75,6 +75,7 @@ export async function getServerSideProps(context: any){
       method: "POST",
       body: token,
     })
+    .catch(err=>console.log(err))
     let data = await res.json()
     data = JSON.parse(data.name)
     let obj: {
