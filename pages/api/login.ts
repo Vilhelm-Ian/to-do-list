@@ -36,6 +36,7 @@ export default function handler(
   return run(req.body)
   .catch(err=>res.status(401).json({name: err}))
   .then((result: Payload)=>{
+      if(result!==undefined) return res.status(401).json("name": "error")
       let response: Payload  = {
         _id: result._id,
         username: result.username,
@@ -45,5 +46,6 @@ export default function handler(
       .then(token=> {
         return res.status(200).json({"name": token})
       })
+      .catch(err=>console.log(err))
   })
 }
