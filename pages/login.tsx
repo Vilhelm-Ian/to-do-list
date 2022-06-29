@@ -31,7 +31,7 @@ export default function Login() {
 async function login(e: any) {
   e.preventDefault()
   try{
-    let res = await fetch(`http://${process.env.URL}/api/login`,{
+    let res = await fetch(`https://${process.env.URL}/api/login`,{
   method: "POST",
   body: JSON.stringify({username, password}),
   headers: {
