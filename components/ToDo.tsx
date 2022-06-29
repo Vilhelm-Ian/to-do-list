@@ -1,4 +1,4 @@
-export default function ToDo (props) {
+export default function ToDo (props: any) {
   function remove() {
     props.remove()
     console.log("hello")
