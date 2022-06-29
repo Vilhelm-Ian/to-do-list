@@ -6,26 +6,27 @@ import styles from '../styles/Home.module.css'
 import {useState, useEffect} from "react"
 import ToDo from "../components/ToDo"
 
-const Home: NextPage = ({data, cookie}) => {
+const Home: NextPage = ({data, token}) => {
   let [to_dos, setToDos] = useState([])
   let [to_do, setToDo] = useState("")
   
   useEffect(()=>{
-  if(cookie!==undefined) {
+  if(token!==undefined) {
     if(to_dos.length===0)setToDos(data.to_dos)
-    let token = cookie.split("=")[1]
-    let response = JSON.stringify({token: token, to_dos: to_dos})
-     
-    fetch("http://localhost:3000/api/update",{
+    let response = JSON.stringify({token,to_dos})
+    fetch(`http://${process.env.URL}/api/update`,{
       method: "POST",
       body: response,
       headers: {
         'Content-Type': "application/json",
       },
 
-    }).then(res=>res.json())
+    })
+    .then(res=>res.json())
+    .then(err=>console.log(err))
+
   }
-  },[to_dos,cookie,data.to_dos])
+  },[to_dos,token,data.to_dos])
 
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault()
@@ -70,7 +71,7 @@ export async function getServerSideProps(context: any){
   let cookie: string = context.req.headers.cookie
   if(cookie.split("=").length !== 0){
     let token = cookie.split("=")[1]
-    let res = await fetch("http://localhost:3000/api/validate_token",{
+    let res = await fetch(`http://${process.env.URL}/api/validate_token`,{
       method: "POST",
       body: token,
     })
@@ -80,7 +81,7 @@ export async function getServerSideProps(context: any){
       data: any,
       cookie: string
     } = {data, token} 
-    return { props: obj}
+    return { props: obj }
   }
   return {
     props: {}
