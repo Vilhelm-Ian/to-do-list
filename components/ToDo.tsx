@@ -1,11 +1,11 @@
-export default function ToDo (props: any) {
+export default function ToDo(props: any) {
   function remove() {
-    props.remove()
-    console.log("hello")
+    props.remove();
+    console.log("hello");
   }
   return (
-    <div className="todo"><span onClick={remove}>🗑️</span> {props.value}</div>
-  )
+    <div className="todo">
+      <span onClick={remove}>🗑️</span> {props.value}
+    </div>
+  );
 }
-
-
