@@ -68,6 +68,7 @@ const Home: NextPage = ({recived_todos, token}) => {
 export default Home
 
 export async function getServerSideProps(context: any){
+  try {
   let cookie: string = context.req.headers.cookie
   if(cookie!==undefined){
     let token = cookie.split("=")[1]
@@ -83,6 +84,10 @@ export async function getServerSideProps(context: any){
       token: string
     } = {recived_todos: data.to_dos, token} 
     return { props: obj }
+  }
+  }
+  catch(err) {
+  console.log(err)
   }
   return {
     props: {}

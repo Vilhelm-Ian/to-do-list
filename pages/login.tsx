@@ -42,7 +42,11 @@ async function login(e: any) {
     let token = await res.json()
     document.cookie = `token=${token.name}`
   }
-  if(res.status === 401) alert("invalid login")
+  if(res.status === 401) {
+    let error = await res.json()
+    console.log(error)
+    alert("invalid login")
+  }
   }
   catch(err) {
     console.log(err)
@@ -65,16 +69,3 @@ async function login(e: any) {
 	 
 }
 
-//export async function getServerSideProps(context){
-//  let cookie = context.req.headers.cookie
-//  if(cookie.split("=").length !== 0){
-//    let token = cookie.split("=")[1]
-//    let res = await fetch("http://localhost:3000/api/validate_token",{
-//      method: "POST",
-//      body: token,
-//    }) 
-//  }
-//  return {
-//    props: {}
-//  }
-//}
