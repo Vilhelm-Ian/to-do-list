@@ -1,9 +1,11 @@
 import { useState } from "react";
 import styles from "../styles/Login.module.css";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter()
 
   function update_input(text: string, callback: Function) {
     if (text.length > 30) return;
@@ -13,7 +15,7 @@ export default function Login() {
   async function register(e: any) {
     e.preventDefault();
     try {
-      let res = await fetch(`${process.env.URL}/api/register`, {
+        await fetch(`${process.env.URL}/api/register`, {
         method: "POST",
         body: JSON.stringify({ username, password }),
         headers: {
@@ -38,6 +40,7 @@ export default function Login() {
       if (res.status === 200) {
         let token = await res.json();
         document.cookie = `token=${token.name}`;
+        router.push("/");
       }
       if (res.status === 401) {
         let error = await res.json();
@@ -51,7 +54,7 @@ export default function Login() {
   return (
     <div className="container">
       <div className="content">
-      <div className="content--title">WELCOME</div>
+        <div className="content--title">WELCOME</div>
         <form className={styles.form} method="post">
           <input
             onChange={(e) => update_input(e.target.value, setUsername)}
@@ -69,10 +72,18 @@ export default function Login() {
             name="password"
             type="password"
           />
-          <button  className={`${styles.form_element} ${styles.login}`} type="submit" onClick={login}>
+          <button
+            className={`${styles.form_element} ${styles.login}`}
+            type="submit"
+            onClick={login}
+          >
             Login
           </button>
-          <button type="submit" className={`${styles.form_element} ${styles.register}`} onClick={register}>
+          <button
+            type="submit"
+            className={`${styles.form_element} ${styles.register}`}
+            onClick={register}
+          >
             Register
           </button>
         </form>
