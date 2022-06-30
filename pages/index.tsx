@@ -49,6 +49,7 @@ const Home: NextPage = ({ recived_todos, token }) => {
               <input
                 type="text"
                 name="todo"
+                placeholder="📝todo"
                 onChange={addTodo}
                 value={to_do}
                 className="form--element form--input"

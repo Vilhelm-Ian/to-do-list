@@ -1,5 +1,23 @@
 .form {
    display: flex;
    flex-direction: column;
-   padding-inline: 5%;
+   padding-inline: 20%;
+}
+
+.form_element {
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  padding: 0.8rem;
+  border: none;
+  box-shadow: 0.5px 0.5px #888888;
+}
+
+.register {
+ color: white;
+ background: #2BAE66FF;
+}
+
+.login {
+  color: white;
+  background: #007BFF;
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "../styles/Login.module.css";
-import { useEffect } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -52,26 +51,28 @@ export default function Login() {
   return (
     <div className="container">
       <div className="content">
+      <div className="content--title">WELCOME</div>
         <form className={styles.form} method="post">
-          <label>username</label>
           <input
             onChange={(e) => update_input(e.target.value, setUsername)}
+            className={styles.form_element}
             value={username}
             name="username"
-            placeholder="Enter username"
+            placeholder="🧍username"
             type="text"
           />
-          <label placeholder="Enter password">password</label>
           <input
+            placeholder="🔒password"
             onChange={(e) => update_input(e.target.value, setPassword)}
+            className={styles.form_element}
             value={password}
             name="password"
             type="password"
           />
-          <button type="submit" onClick={login}>
+          <button  className={`${styles.form_element} ${styles.login}`} type="submit" onClick={login}>
             Login
           </button>
-          <button type="submit" onClick={register}>
+          <button type="submit" className={`${styles.form_element} ${styles.register}`} onClick={register}>
             Register
           </button>
         </form>

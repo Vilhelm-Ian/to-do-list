@@ -13,6 +13,10 @@ nav {
 h1 {
   color: #F9F9F9;
 }
+
+p:hover {
+  cursor: pointer;
+}
  
 p {
   color: #5E8F96;
@@ -35,6 +39,8 @@ p {
 }
 
 .content--title {
+  position: sticky;
+  top: 0px;
   font-size: 2rem;
   font-weight: 700;
   background: #F5F5F5;
@@ -55,12 +61,14 @@ p {
   margin-top: 0.5rem;
   padding: 1% 0.5rem;
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
 .form--element {
   padding: 1.5%;
   margin-top: 1.5rem;
-  border-radius: 10%;
+  border-radius: 8px;
+  box-shadow: 0.5px 0.5px #888888;
 }
 .form--submit {
   margin-left: 1rem;
