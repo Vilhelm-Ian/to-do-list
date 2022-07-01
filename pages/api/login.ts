@@ -32,13 +32,13 @@ async function run(form_data: User, ip: string) {
       throw "failed login";
     }
   } catch (err) {
-    throw `login failed ${err}`;
+    throw `${err}`;
   }
 }
 
 async function jwt_sign(payload: Payload) {
   let secretKey = String(process.env.JWT_KEY);
-  return jwt.sign(payload, secretKey);
+  return jwt.sign(payload, secretKey,{expiresIn: "7d"});
 }
 
 async function add_failed_login_attempt(username: string, ip: string) {
