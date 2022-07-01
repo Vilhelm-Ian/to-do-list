@@ -64,6 +64,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  console.log(req.cookies,"santa hungry")
   let ip = req.headers["x-real-ip"] || req.connection.remoteAddress
   run(req.body, String(ip))
     .catch((err) => res.status(401).json({ err: err }))
