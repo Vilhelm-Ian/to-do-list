@@ -3,7 +3,6 @@ import Link from "next/link";
 interface props_interface {
   username: string,
   setUsername(arg:string): void,
-  setLoggedin(arg:boolean|undefined): void 
 }
 
 export default function NavBar(props:props_interface) {
