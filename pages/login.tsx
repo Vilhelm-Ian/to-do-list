@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("")
   const router = useRouter()
 
   function update_input(text: string, callback: Function) {
@@ -43,9 +44,8 @@ export default function Login() {
         router.push("/");
       }
       if (res.status === 401) {
-        let error = await res.json();
-        console.log(error);
-        alert("invalid login");
+        let error_response = await res.json();
+        setError(error_response.err)
       }
     } catch (err) {
       console.log(err);
@@ -86,6 +86,7 @@ export default function Login() {
           >
             Register
           </button>
+          <p>{error}</p>
         </form>
       </div>
     </div>

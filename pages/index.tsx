@@ -2,6 +2,7 @@
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
 import ToDo from "../components/ToDo";
+import { getCookie } from 'cookies-next'
 
 
 
@@ -10,7 +11,7 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
   let [to_do, setToDo] = useState("");
 
   useEffect(() => {
-    if (token !== undefined) {
+    if (token !== undefined&&getCookie("token")!==undefined) {
       if (to_dos.length === 0) setToDos(recived_todos);
       let response = JSON.stringify({ token, to_dos });
       fetch(`${process.env.URL}/api/update`, {
@@ -22,12 +23,16 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
       })
         .then((res) => res.json())
         .then(data=>{
-          console.log(data)
           setUsername(username)
         })
         .catch((err) => console.log(err));
     }
   }, [to_dos, token, recived_todos]);
+
+  useEffect(()=>{
+   console.log(getCookie("token"))
+   if(getCookie("token")===undefined) setToDos([])
+  },[getCookie("token")])
 
 
   function addElement(event: React.MouseEvent<HTMLElement>) {
