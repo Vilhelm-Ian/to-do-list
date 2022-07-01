@@ -1,15 +1,32 @@
 import Link from "next/link";
 
-export default function NavBar() {
+interface props_interface {
+  username: string,
+  setUsername(arg:string): void,
+}
+
+export default function NavBar(props:props_interface) {
+  function logout() {
+  document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+  props.setUsername("")
+  }
+
   return (
     <nav>
       <h1>ToDo</h1>
       <Link href="/">
         <p>Home</p>
       </Link>
-      <Link href="/login">
+      {
+      props.username !== "" ?
+        <div>
+          <p>logged in as {props.username}</p>
+          <p onClick={logout}>logout</p>
+        </div>
+      : <Link href="/login">
         <p>Login</p>
       </Link>
+      }
     </nav>
   );
 }
