@@ -11,8 +11,8 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
   let [to_do, setToDo] = useState("");
 
   useEffect(() => {
-    if (token !== undefined&&getCookie("token")!==undefined) {
-      if (to_dos.length === 0) setToDos(recived_todos);
+    if (getCookie("token")!==undefined) {
+      if (to_dos.length === 0)  setToDos(recived_todos);
       let response = JSON.stringify({ token, to_dos });
       fetch(`${process.env.URL}/api/update`, {
         method: "POST",
@@ -30,7 +30,6 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
   }, [to_dos, token, recived_todos]);
 
   useEffect(()=>{
-   console.log(getCookie("token"))
    if(getCookie("token")===undefined) setToDos([])
   },[getCookie("token")])
 
@@ -38,6 +37,7 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault();
     setToDos((oldToDos) => [...oldToDos, to_do]);
+    setToDo("")
   }
 
   function removeTodo(value: string) {
