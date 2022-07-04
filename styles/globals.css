@@ -78,18 +78,9 @@ p {
   color: white;
   border: none;
 }
-@media (max-width: 370px) {
-  .form--submit {
-    width: 100%;
-    margin: 0;
-    margin-top: 0.5rem;
-  }
-  .form--input {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
+
 .form--input {
+  margin-left: 0.5rem;
   border: solid #EFF1F3 1px;
 }
 .form--input:focus {
@@ -100,3 +91,16 @@ p {
   width: 90%;
 }
  
+ @media (max-width: 370px) {
+   .form--submit {
+     width: 100%;
+     margin: 0;
+     margin-top: 0.5rem;
+   }
+   .form--input {
+     width: 100%;
+     margin-left: 0rem;
+     margin-top: 0.5rem;
+     box-sizing: border-box;
+   }
+ }

@@ -98,6 +98,8 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
                 value={to_do}
                 className="form--element form--input"
               />
+              <input className="form--element form--input" type="date"/>
+              <input className="form--element form--input"type="time"/>
               <button
                 type="submit"
                 name="submit"
