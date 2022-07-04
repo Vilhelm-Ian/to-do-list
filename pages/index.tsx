@@ -29,14 +29,30 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
     }
   }, [to_dos, token, recived_todos]);
 
+   
   useEffect(()=>{
-   if(getCookie("token")===undefined) setToDos([])
+   if(getCookie("token")===undefined) {
+     if(localStorage.getItem("to_dos")) setToDos(JSON.parse(localStorage.getItem("to_dos")))
+     else setToDos([])
+   }
   },[getCookie("token")])
-
+   
+  useEffect(()=>{
+    if(to_dos.length === 0&&getCookie("token")===undefined) {
+    let to_dos_from_local_storage = localStorage.getItem("to_dos")
+    if(to_dos_from_local_storage!==undefined) {
+      setToDos(JSON.parse(to_dos_from_local_storage))
+    }
+    }
+  },[])
 
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault();
-    setToDos((oldToDos) => [...oldToDos, to_do]);
+    setToDos((oldToDos) => {
+    let new_to_dos =  [...oldToDos, to_do]
+    if(getCookie("token")===undefined) localStorage.setItem("to_dos", JSON.stringify(new_to_dos))
+    return new_to_dos
+    });
     setToDo("")
   }
 
