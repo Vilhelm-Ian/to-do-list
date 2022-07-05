@@ -2,13 +2,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import dbConnect from "../../utils/dbConnect";
-import UserModel, { User } from "../../models/userModel";
+import UserModel, { User, element } from "../../models/userModel";
 import jwt from "jsonwebtoken";
 import attemptsModel from "../../models/LoginAttemptsModel";
 
 export interface Payload {
   username: string;
-  to_dos: string[];
+  to_dos: element[];
   _id: string;
 }
 
@@ -64,7 +64,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  let ip = req.headers["x-real-ip"] || req.connection.remoteAddress
+  let ip = req.headers["x-real-ip"] || req.socket.remoteAddress
   run(req.body, String(ip))
     .catch((err) => res.status(401).json({ err: err }))
     .then((result: Payload) => {
