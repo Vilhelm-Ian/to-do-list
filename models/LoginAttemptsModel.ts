@@ -2,10 +2,10 @@ import { Schema, model, models } from "mongoose";
 
 const attemptsSchema = new Schema({
   username: String,
-  arr : [String]
-},{timestamps: true});
+  arr : [String],
+  createdAt:  { type: Date, expires: '1440m', default: Date.now },
+});
 
-attemptsSchema.index({createdAt: 1},{expireAfterSeconds: 60*60*24})
 
 const attemptsModel = models.attempt || model("attempt", attemptsSchema);
 

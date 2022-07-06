@@ -15,7 +15,7 @@ export default function ToDo(props: any) {
   },[props.index])
    
   function remove() {
-    props.setToDos(oldTodos=>oldTodos.filter((_, position_in_array)=> index!==position_in_array))
+    props.setToDos(oldTodos=>oldTodos.filter((_, position_in_array: number)=> index!==position_in_array))
   }
 
   function edit() {
@@ -41,15 +41,18 @@ export default function ToDo(props: any) {
   if(!editing){
   return (
     <div className="todo">
-      <span><span onClick={remove}>🗑️</span>{props.value}</span>
-      <span><span>{props.date} {props.time} </span><button onClick={edit}>Edit</button></span>
+      <span><span onClick={remove}>🗑️</span><span className="todo--task">{props.value}</span></span>
+      <div className="todo--left--half">
+      <span className="todo--time">{props.date} {props.time}</span>
+      <button className="todo--edit" onClick={edit}>EDIT</button>
+      </div>
     </div>
   );
   }
   else {
     return (
     <div className="todo">
-    <input onChange={update} value={toDo}></input>
+    <input className="todo--edit" onChange={update} value={toDo}></input>
     <button onClick={done}>Done</button>
     </div>
     )

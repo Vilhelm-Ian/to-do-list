@@ -12,6 +12,12 @@ export interface Payload {
   _id: string;
 }
 
+interface Attempt {
+  username: string
+  arr: string[]
+  save(): void 
+}
+
 async function run(form_data: User, ip: string) {
   try {
     await dbConnect();
@@ -25,7 +31,10 @@ async function run(form_data: User, ip: string) {
     );
     if (user[0] === undefined) throw "failed login";
     let match = await bcrypt.compare(form_data.password, user[0].password);
-    if (match) return user[0];
+    if (match) {
+      remove_failed_login_attempt(form_data.username,ip)
+      return user[0];
+    }
     else {
       add_failed_login_attempt(form_data.username, ip)
       console.log("wrong password");
@@ -42,15 +51,22 @@ async function jwt_sign(payload: Payload) {
 }
 
 async function add_failed_login_attempt(username: string, ip: string) {
-  let attempts = await attemptsModel.find({ username });
-  if (attempts[0] === undefined) {
+  let attempts = await attemptsModel.findOne({ username });
+  if (attempts === null) {
     let new_attempt = new attemptsModel({ username, arr: [ip] });
     await new_attempt.save();
   }
   else {
-    attempts[0].arr.push(ip)
-    attempts[0].save()
+    attempts.arr.push(ip)
+    attempts.save()
   }
+}
+
+async function remove_failed_login_attempt(username: string, ip: string) {
+  let attempts: Attempt | null = await attemptsModel.findOne({ username });
+  if(attempts===null) throw "no failed attempts"
+  attempts.arr = attempts.arr.filter(element=> element!== ip)
+  attempts.save()
 }
 
 async function is_attempt_limit_reached(username: string,ip: string) {

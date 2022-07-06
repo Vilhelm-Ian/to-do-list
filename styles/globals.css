@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,500&display=swap');
+
 body {
   margin: 0;
 }
@@ -8,21 +10,22 @@ nav {
   height: 10vh;
   justify-content: space-between;
   padding-inline: 5%;
+  align-items: center;
+  overflow: hidden;
 }
 
 h1 {
-  color: #F9F9F9;
+  color: #f9f9f9;
 }
 
 p:hover {
   cursor: pointer;
 }
- 
+
 p {
-  color: #5E8F96;
+  color: #5e8f96;
 }
- 
- 
+
 .container {
   height: 90vh;
   display: flex;
@@ -43,7 +46,7 @@ p {
   top: 0px;
   font-size: 2rem;
   font-weight: 700;
-  background: #F5F5F5;
+  background: #f5f5f5;
   border-bottom: 2px solid #006100;
   display: flex;
   justify-content: space-between;
@@ -58,7 +61,7 @@ p {
 .todo {
   width: 90%;
   word-wrap: break-word;
-  background: #F5F5F5;
+  background: #f5f5f5;
   border: solid 1px #d5d5d5;
   margin-top: 0.5rem;
   padding: 1% 0.5rem;
@@ -68,34 +71,55 @@ p {
   justify-content: space-between;
 }
 
+.todo--edit {
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  box-shadow: 0.5px 0.5px #888888;
+}
+
+.todo--time {
+  color: darkgray;
+  font-family: Roboto;
+  text-align: center;
+}
+
+.todo--task {
+  width: 40%;
+  word-wrap: break-word;
+  font-family: sans-serif;
+}
+
 .form--element {
   padding: 1.5%;
   margin-top: 1.5rem;
   border-radius: 8px;
   box-shadow: 0.5px 0.5px #888888;
 }
+
 .form--submit {
   margin-left: 1rem;
-  background: #007BFF;
+  background: green;
   color: white;
+  font-weight: bold;
   border: none;
 }
 
 .form--inputs {
- display: flex;
+  display: flex;
+  width: 100%;
 }
 
 .form--input {
-  border: solid #EFF1F3 1px;
+  border: solid #eff1f3 1px;
 }
 
- 
 .form--date {
   margin-left: 0.5rem;
 }
 
 .form--input:focus {
-  border: solid #EFF1F3 1px;
+  border: solid #eff1f3 1px;
 }
 
 .form {
@@ -103,25 +127,48 @@ p {
   display: flex;
   justify-content: space-between;
 }
- 
-.sort {
 
+
+@media (max-width: 650px) {
+  .form {
+    flex-direction: column;
+  }
+  .form--inputs {
+    flex-direction: column;
+  }
+  .form--element {
+    margin-top: 0.5rem;
+    margin-left: 0;
+  }
 }
 
- @media (max-width: 370px) {
-   .form {
-     flex-direction: column;
-   }
-   .form--submit {
-     width: 100%;
-     margin: 0;
-     margin-top: 0.5rem;
-   }
-   .form--input {
-     width: 100%;
-     margin-left: 0rem;
-     margin-top: 0.5rem;
-     box-sizing: border-box;
-     flex-direction: column;
-   }
- }
+@media (max-width: 370px) {
+  .form {
+    flex-direction: column;
+  }
+  .form--submit {
+    width: 100%;
+    margin: 0;
+    margin-top: 0.5rem;
+  }
+  .form--input {
+    width: 100%;
+    margin-left: 0rem;
+    margin-top: 0.5rem;
+    box-sizing: border-box;
+    flex-direction: column;
+  }
+  .todo--task {
+    width: 100%;
+  }
+  .todo {
+    flex-direction: column;
+  }
+  .todo--edit{
+    width: 100%;
+    display: block;
+  }
+  .todo--left--half{
+    text-align: center;
+  }
+}
