@@ -1,18 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Schema, model, connect } from "mongoose";
 import dbConnect from "../../utils/dbConnect";
-import UserModel, { User } from "../../models/userModel";
+import UserModel  from "../../models/userModel";
 import jwt from "jsonwebtoken";
-import { Payload } from "./login";
 
 async function run(token: string) {
   let secret = String(process.env.JWT_KEY);
-  let result: any = await jwt.verify(token, secret);
+  let result: any = jwt.verify(token, secret);
   await dbConnect();
   let user = await UserModel.findById(result._id);
   let data = await UserModel.findById(user._id);
   return {
-    to_dos: data.to_dos,
+    to_dos: data.element,
     username: data.username,
   };
 }

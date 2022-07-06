@@ -1,24 +1,28 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../utils/dbConnect";
-import UserModel from "../../models/userModel";
+import UserModel, {element} from "../../models/userModel";
 import jwt from "jsonwebtoken";
 
 interface Data {
   token: string;
-  to_dos: string[];
+  to_dos: element[];
 }
 
 async function run(body: Data,token: string) {
+  try {
   let secret = String(process.env.JWT_KEY);
   let result: any = jwt.verify(token, secret);
   await dbConnect();
   let user = await UserModel.findOneAndUpdate(
     { _id: result._id },
-    { to_dos: body.to_dos },
+    { element: body.to_dos },
     { new: true }
   );
-  console.log(user, body.to_dos);
   await user.save();
+  }
+  catch(err) {
+  throw err
+  }
 }
 
 export default function handler(
@@ -26,6 +30,6 @@ export default function handler(
   res: NextApiResponse<any>
 ) {
   return run(req.body,req.cookies.token)
+    .then(() => res.status(200).json({ name: "update_array" }))
     .catch((err) => res.status(401).json({ name: err }))
-    .then(() => res.status(200).json({ name: "update_array" }));
 }

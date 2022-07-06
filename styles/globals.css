@@ -45,6 +45,8 @@ p {
   font-weight: 700;
   background: #F5F5F5;
   border-bottom: 2px solid #006100;
+  display: flex;
+  justify-content: space-between;
   padding: 2% 5%;
 }
 .content--elements {
@@ -79,19 +81,37 @@ p {
   border: none;
 }
 
+.form--inputs {
+ display: flex;
+}
+
 .form--input {
-  margin-left: 0.5rem;
   border: solid #EFF1F3 1px;
 }
+
+ 
+.form--date {
+  margin-left: 0.5rem;
+}
+
 .form--input:focus {
   border: solid #EFF1F3 1px;
 }
 
 .form {
   width: 90%;
+  display: flex;
+  justify-content: space-between;
 }
  
+.sort {
+
+}
+
  @media (max-width: 370px) {
+   .form {
+     flex-direction: column;
+   }
    .form--submit {
      width: 100%;
      margin: 0;
@@ -102,5 +122,6 @@ p {
      margin-left: 0rem;
      margin-top: 0.5rem;
      box-sizing: border-box;
+     flex-direction: column;
    }
  }

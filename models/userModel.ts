@@ -1,15 +1,21 @@
 import { Schema, model, models } from "mongoose";
 
+export interface element {
+  to_do: string;
+  date: string;
+  time: string;
+}
+
 export interface User {
   username: string;
   password: string;
-  to_dos: string[];
+  element: element[];
 }
 
 const userSchema = new Schema<User>({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  to_dos: [String],
+  element: [{ to_do: String, date: String, time: String }],
 });
 
 const UserModel = models.Users || model("Users", userSchema);
