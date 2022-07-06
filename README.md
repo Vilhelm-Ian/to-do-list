@@ -15,6 +15,7 @@ https://to-do-list-next-js.herokuapp.com/
 - [x] Adding, removing, editing a todo
 - [x] Scheduling a todo
 - [x] Add an account to a database
+- [x] encrypt user password
 - [x] Stay logged in for 2 weeks using a json web token
 - [x] Store todos in localstorage if not logged in
 - [x] Store todos in database if logged in
