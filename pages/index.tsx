@@ -6,20 +6,22 @@ import { getCookie } from "cookies-next";
 import { format_date, format_time } from "../utils/format_date";
 import {element} from "../models/userModel"
 
-const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
+const Home: NextPage = ({ recived_todos,  setUsername, username }) => {
   let today = new Date().toLocaleDateString();
   let [to_dos, setToDos] = useState([]);
   let [to_do, setToDo] = useState("");
   let [date, setDate] = useState(format_date(today));
   let [time, setTime] = useState(format_time(new Date()));
-    
+
+  let token = getCookie("token") 
+
   useEffect(() => {
     if (getCookie("token") === undefined) {
       if (localStorage.getItem("to_dos"))
         setToDos(JSON.parse(localStorage.getItem("to_dos")));
       else setToDos([]);
     }
-  }, [getCookie("token")]);
+  }, [token]);
 
   useEffect(() => {
     if (getCookie("token") !== undefined) {
@@ -41,7 +43,7 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
       localStorage.setItem("to_dos", JSON.stringify(to_dos));
       update_to_dos_if_local();
     }
-  }, [to_dos, token, recived_todos]);
+  }, [to_dos, token, recived_todos, setUsername, username]);
 
    
   useEffect(()=>sort_to_dos(),[to_dos.length])
@@ -132,7 +134,6 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
                 type="submit"
                 name="submit"
                 className="form--element form--submit"
-                type="submit"
               >
                 SUBMIT
               </button>
@@ -160,9 +161,8 @@ export async function getServerSideProps(context: any) {
       data = JSON.parse(data.name)
       let obj: {
         recived_todos: element[];
-        token: string;
         username: string;
-      } = { recived_todos: data.to_dos, token, username: data.username };
+      } = { recived_todos: data.to_dos,  username: data.username };
       return { props: obj };
     }
   } catch (err) {

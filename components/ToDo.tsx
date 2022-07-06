@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import {element} from "../models/userModel"
 
 export default function ToDo(props: any) {
   const [editing, setEditing] = useState(false);
@@ -16,14 +17,14 @@ export default function ToDo(props: any) {
   }, [props.index]);
 
   function remove() {
-    props.setToDos((oldTodos) =>
+    props.setToDos((oldTodos: element[]) =>
       oldTodos.filter(
         (_, position_in_array: number) => index !== position_in_array
       )
     );
   }
 
-  function handle_input(value, callback) {
+  function handle_input(value: any, callback: (value: any)=> void) {
     callback(value);
   }
 
@@ -32,15 +33,10 @@ export default function ToDo(props: any) {
   }
 
   function done() {
-    props.setToDos((oldToDos: []) => {
-      oldToDos[props.index].to_do = toDo;
-      return [...oldToDos];
-    });
-    props.setToDos((oldTodo) => {
+    props.setToDos((oldTodo: element[]) => {
       oldTodo[index].to_do = toDo;
       oldTodo[index].date = date;
       oldTodo[index].time = time;
-      console.log(oldTodo[index]);
       return [...oldTodo];
     });
     setEditing(false);
