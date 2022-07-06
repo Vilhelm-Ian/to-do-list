@@ -103,12 +103,6 @@ p {
   text-align: center;
 }
 
-.todo--edit--button {
-  width: 100%;
-}
-
-
-
 .form--element {
   padding: 1.5%;
   margin-top: 1.5rem;
@@ -183,6 +177,9 @@ p {
   }
   .todo {
     flex-direction: column;
+  }
+  .todo--edit {
+    width: 100%;
   }
   .todo--button{
     width: 100%;

@@ -66,8 +66,14 @@ export default function ToDo(props: any) {
   } else {
     return (
       <div className="todo">
-        <div className="todo--editing">
-          <input className="todo--edit" onChange={(e)=> handle_input(e.target.value, setToDo)} value={toDo}></input>
+        <div className="todo--right--half">
+          <input
+            className="todo--edit"
+            onChange={(e) => handle_input(e.target.value, setToDo)}
+            value={toDo}
+          ></input>
+        </div>
+        <div>
           <input
             value={date}
             className="todo--edit"
@@ -80,8 +86,6 @@ export default function ToDo(props: any) {
             onChange={(e) => handle_input(e.target.value, setTime)}
             type="time"
           />
-        </div>
-        <div>
           <button onClick={done} className="todo--button todo--edit--button">
             DONE
           </button>
