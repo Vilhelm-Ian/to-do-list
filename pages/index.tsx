@@ -98,7 +98,7 @@ const Home: NextPage = ({ recived_todos, token, setUsername, username }) => {
     <div>
       <div className="container">
         <div className="content">
-          <div className="content--title">TODO LIST <span>⬇️</span></div>
+          <div className="content--title">TODO LIST</div>
           <div className="content--elements">
             <form className="form" onSubmit={addElement}>
               <span className="form--inputs">
