@@ -51,6 +51,7 @@ export default function Login() {
       console.log(err);
     }
   }
+
   return (
     <div className="container">
       <div className="content">
@@ -73,7 +74,7 @@ export default function Login() {
             type="password"
           />
           <button
-            className={`${styles.form_element} ${styles.login}`}
+            className={`${styles.form_element} ${styles.login} todo--button`}
             type="submit"
             onClick={login}
           >

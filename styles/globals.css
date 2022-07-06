@@ -26,6 +26,7 @@ p {
   color: #5e8f96;
 }
 
+
 .container {
   height: 90vh;
   display: flex;
@@ -58,7 +59,7 @@ p {
   align-items: center;
 }
 
-.todo {
+.todo{
   width: 90%;
   word-wrap: break-word;
   background: #f5f5f5;
@@ -71,9 +72,9 @@ p {
   justify-content: space-between;
 }
 
-.todo--edit {
-  border-radius: 8px;
+.todo--button {
   border: none;
+  height: 100%;
   font-weight: bold;
   box-shadow: 0.5px 0.5px #888888;
 }
@@ -85,10 +86,28 @@ p {
 }
 
 .todo--task {
-  width: 40%;
-  word-wrap: break-word;
   font-family: sans-serif;
 }
+
+.todo--right--half {
+  word-break: break-all;
+  width: 40%;
+}
+
+.todo--editing {
+  display: flex;
+}
+
+.todo--edit {
+  height: 100%;
+  text-align: center;
+}
+
+.todo--edit--button {
+  width: 100%;
+}
+
+
 
 .form--element {
   padding: 1.5%;
@@ -130,6 +149,10 @@ p {
 
 
 @media (max-width: 650px) {
+  .todo--editing {
+   flex-direction: column;
+   width: 100%;
+  }
   .form {
     flex-direction: column;
   }
@@ -140,9 +163,6 @@ p {
     margin-top: 0.5rem;
     margin-left: 0;
   }
-}
-
-@media (max-width: 370px) {
   .form {
     flex-direction: column;
   }
@@ -164,11 +184,15 @@ p {
   .todo {
     flex-direction: column;
   }
-  .todo--edit{
+  .todo--button{
     width: 100%;
     display: block;
+  border-radius: 0 0px 8px 8px;
   }
   .todo--left--half{
     text-align: center;
+  }
+  .todo--right--half{
+    width: 100%;
   }
 }
