@@ -65,7 +65,7 @@ async function add_failed_login_attempt(username: string, ip: string) {
 async function remove_failed_login_attempt(username: string, ip: string) {
   try {
   let attempts: Attempt | null = await attemptsModel.findOne({ username });
-  if(attempts===null) throw "no failed attempts"
+  if(attempts===null) return "no failed attempts"
   attempts.arr = attempts.arr.filter(element=> element!== ip)
   attempts.save()
   }
