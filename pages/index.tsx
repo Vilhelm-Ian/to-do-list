@@ -23,21 +23,20 @@ const Home: NextPage = ({ recived_todos,  setUsername, username }) => {
     }
   }, [token]);
 
+  useEffect(()=>{
+    setUsername(username);
+    if (recived_todos!==undefined) setToDos(recived_todos);
+  },[])
+
   useEffect(() => {
     if (getCookie("token") !== undefined) {
-      if (to_dos.length === 0) setToDos(recived_todos);
-      let response = JSON.stringify({ token, to_dos });
       fetch(`${process.env.URL}/api/update`, {
         method: "POST",
-        body: response,
+        body:  JSON.stringify({  to_dos }),
         headers: {
           "Content-Type": "application/json",
         },
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setUsername(username);
-        })
         .catch((err) => console.log(err));
     } else {
       localStorage.setItem("to_dos", JSON.stringify(to_dos));
