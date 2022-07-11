@@ -11,7 +11,8 @@ const Home: NextPage = ({ setUsername }) => {
   let [to_do, setToDo] = useState("");
   let [date, setDate] = useState(format_date(today));
   let [time, setTime] = useState(format_time(new Date()));
-  let [isLoggedIn, setIsLoggedIn] = useState(undefined);
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [isFirstRender, setIsFirstRender] = useState(true);
 
   let token = getCookie("token");
 
@@ -58,11 +59,11 @@ const Home: NextPage = ({ setUsername }) => {
         },
       }).catch((err) => console.log(`error updating: ${err}`));
     } else {
-      if (isLoggedIn !== undefined)
-        // on initial load isLoggedIn is undefined every other case it's true or false
+      if (!isFirstRender)
         localStorage.setItem("to_dos", JSON.stringify(to_dos));
       update_to_dos_if_local();
     }
+    setIsFirstRender(false);
   }, [to_dos, isLoggedIn]);
 
   useEffect(() => sort_to_dos(), [to_dos.length]);
