@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../utils/dbConnect";
-import UserModel  from "../../models/userModel";
+import UserModel from "../../models/userModel";
 import jwt from "jsonwebtoken";
 
 async function run(token: string) {
@@ -19,8 +19,8 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  return run(req.body)
-    .catch((err) => console.log(err))
+  return run(req.cookies.token)
+    .catch((err) => res.status(501).json({ error: `${err}couldn't validate` }))
     .then((user) => {
       return res.status(200).json({ name: JSON.stringify(user) });
     });
