@@ -21,9 +21,9 @@ const Home: NextPage = ({ setUsername }) => {
       try {
         let res = await fetch(`${process.env.URL}/api/validate_token`, {
           method: "POST",
-        }).catch((err) => console.log(err));
+        });
         let data = await res.json();
-        console.log(data);
+        //  console.log(data);
         data = JSON.parse(data.name);
         setIsLoggedIn(true);
         setUsername(data.username);
@@ -35,7 +35,10 @@ const Home: NextPage = ({ setUsername }) => {
     if (token !== undefined) authenticate();
     else {
       let to_dos_from_local_storage = localStorage.getItem("to_dos");
-      if (to_dos_from_local_storage != "undefined") {
+      if (
+        to_dos_from_local_storage != "undefined" &&
+        to_dos_from_local_storage
+      ) {
         setToDos(JSON.parse(to_dos_from_local_storage));
       } else {
         setToDos([]);
@@ -74,12 +77,13 @@ const Home: NextPage = ({ setUsername }) => {
 
   function update_to_dos_if_local() {
     let to_dos_from_local_storage = localStorage.getItem("to_dos");
+    let newToDos;
     if (to_dos_from_local_storage !== "undefined") {
-      let newToDos = JSON.parse(to_dos_from_local_storage);
+      newToDos = JSON.parse(to_dos_from_local_storage);
     }
     setToDos((oldToDos) => {
       if (oldToDos?.toString() !== newToDos?.toString()) return newToDos;
-      else return oldToDos;
+      else return oldToDos || [];
     });
   }
 
