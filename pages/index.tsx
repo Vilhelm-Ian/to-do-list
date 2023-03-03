@@ -35,7 +35,11 @@ const Home: NextPage = ({ setUsername }) => {
     if (token !== undefined) authenticate();
     else {
       let to_dos_from_local_storage = localStorage.getItem("to_dos");
-      setToDos(JSON.parse(to_dos_from_local_storage) || []);
+      if (to_dos_from_local_storage != "undefined") {
+        setToDos(JSON.parse(to_dos_from_local_storage));
+      } else {
+        setToDos([]);
+      }
     }
   }, []);
 
@@ -43,7 +47,7 @@ const Home: NextPage = ({ setUsername }) => {
     if (token === undefined) {
       setIsLoggedIn(false);
       let to_dos_from_local_storage = localStorage.getItem("to_dos");
-      if (to_dos_from_local_storage)
+      if (to_dos_from_local_storage != "undefined")
         setToDos(JSON.parse(to_dos_from_local_storage));
       else setToDos([]);
     }
@@ -66,13 +70,15 @@ const Home: NextPage = ({ setUsername }) => {
     setIsFirstRender(false);
   }, [to_dos, isLoggedIn]);
 
-  useEffect(() => sort_to_dos(), [to_dos.length]);
+  useEffect(() => sort_to_dos(), [to_dos?.length]);
 
   function update_to_dos_if_local() {
     let to_dos_from_local_storage = localStorage.getItem("to_dos");
-    let newToDos = JSON.parse(to_dos_from_local_storage);
+    if (to_dos_from_local_storage !== "undefined") {
+      let newToDos = JSON.parse(to_dos_from_local_storage);
+    }
     setToDos((oldToDos) => {
-      if (oldToDos.toString() !== newToDos.toString()) return newToDos;
+      if (oldToDos?.toString() !== newToDos?.toString()) return newToDos;
       else return oldToDos;
     });
   }
@@ -80,6 +86,7 @@ const Home: NextPage = ({ setUsername }) => {
   function addElement(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault();
     setToDos((oldToDos) => {
+      oldToDos = oldToDos || [];
       let new_to_dos = [...oldToDos, { to_do, date, time }];
       if (!isLoggedIn)
         localStorage.setItem("to_dos", JSON.stringify(new_to_dos));
@@ -95,7 +102,7 @@ const Home: NextPage = ({ setUsername }) => {
 
   function sort_to_dos() {
     setToDos((oldToDos) =>
-      oldToDos.sort((a, b) => {
+      oldToDos?.sort((a, b) => {
         let first = Number("".concat(...a.date.split("-")));
         let second = Number("".concat(...b.date.split("-")));
         return first - second;
@@ -106,7 +113,7 @@ const Home: NextPage = ({ setUsername }) => {
   let to_do_jsx = useMemo(() => generate_to_do_jsx(), [to_dos]);
 
   function generate_to_do_jsx() {
-    return to_dos.map((element: object, key: number) => (
+    return to_dos?.map((element: object, key: number) => (
       <ToDo
         key={key}
         setToDos={setToDos}
